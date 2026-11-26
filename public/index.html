@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uranium Girls</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  body {
+    min-height: 100vh;
+    background-color: #2e1c10;
+  }
+  .side-bar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 45px;
+    background: #26ff2e;
+    box-shadow: 0 0 25px #26ff2e;
+    z-index: 0;
+  }
+  .side-bar.left { left: 0; }
+  .side-bar.right { right: 0; }
+  .page-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 24px 65px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: "Jokerman", "Papyrus", fantasy;
+    color: #f3e6d2;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 40px;
+  }
+  main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 { font-weight: normal; letter-spacing: 1px; margin: 0 0 40px; }
+  .tagline { font-style: italic; margin-bottom: 40px; }
+  .hero-frame { position: relative; width: min(100%, 50vh); margin: 0 auto; }
+  .hero { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center top; display: block; border-radius: 4px; }
+
+  .button-grid { position: absolute; inset: 0; pointer-events: none; }
+  .button-grid a { position: absolute; display: block; width: 120px; pointer-events: auto; }
+  .button-grid a:nth-child(1) { top: -34px; left: -34px; }
+  .button-grid a:nth-child(2) { top: -34px; right: -34px; }
+  .button-grid a:nth-child(3) { bottom: -34px; left: -34px; }
+  .button-grid a:nth-child(4) { bottom: -34px; right: -34px; }
+  .button-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.08s ease;
+    cursor: pointer;
+  }
+  .button-grid a.pressed img { transform: scale(0.92) translateY(3px); }
+
+  .page { padding-top: 20px; }
+  .back { display: inline-block; margin-bottom: 30px; color: #f3e6d2; }
+
+  .photo-list { display: flex; flex-direction: column; align-items: center; padding-bottom: 30px; }
+  .photo-list img { display: block; border-radius: 4px; }
+
+  .lead-photo { margin: 0 0 20px; }
+  .lead-photo img { display: block; width: 100%; border-radius: 4px; }
+  .lead-photo figcaption { font-style: italic; font-size: 0.85em; color: #c9b79c; margin-top: 8px; text-align: right; }
+
+  .button-grid a.text-button {
+    color: #f3e6d2;
+    text-decoration: none;
+    font-size: 0.95em;
+    letter-spacing: 2px;
+    line-height: 1.3;
+    text-align: left;
+    padding: 72px 0 0 6px;
+    box-sizing: border-box;
+    transition: transform 0.08s ease;
+  }
+  .button-grid a.text-button.pressed { transform: scale(0.92) translateY(3px); color: #26ff2e; }
+
+  .project-meta { font-style: italic; color: #c9b79c; margin: -10px 0 20px; }
+  .none-yet { font-style: italic; color: #c9b79c; }
+  .project-list { list-style: none; padding: 0; margin: 0; }
+  .project-list li { margin-bottom: 20px; }
+  .project-list a { color: #26ff2e; font-size: 1.4em; }
+
+  .shop-item { margin-bottom: 70px; }
+  .shop-item h3 { font-weight: normal; margin: 0 0 6px; }
+  .shop-item .price { color: #26ff2e; margin: 0 0 12px; }
+  .shop-item .note { font-style: italic; color: #c9b79c; margin: 0 auto 16px; max-width: 420px; }
+  .shop-photos { display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; }
+  .shop-photos img { flex: 1; min-width: 0; max-width: 340px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px; }
+  .shop-options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .shop-options a, .shop-options span {
+    min-width: 48px;
+    padding: 8px 14px;
+    border: 2px solid #26ff2e;
+    border-radius: 4px;
+    color: #26ff2e;
+    text-decoration: none;
+    font-size: 1.1em;
+  }
+  .shop-options a:hover { background: #26ff2e; color: #2e1c10; }
+  .shop-options span { border-color: #6b5a44; color: #6b5a44; text-decoration: line-through; }
+
+  footer { font-style: italic; font-size: 0.85em; margin-top: 60px; color: #c9b79c; }
+
+  /* phones: slimmer side bars and padding so the content gets the room */
+  @media (max-width: 600px) {
+    .side-bar { width: 16px; box-shadow: 0 0 12px #26ff2e; }
+    .page-wrap { padding: 20px 40px; }
+    .button-grid a { width: 84px; }
+    .button-grid a:nth-child(1) { top: -24px; left: -24px; }
+    .button-grid a:nth-child(2) { top: -24px; right: -24px; }
+    .button-grid a:nth-child(3) { bottom: -24px; left: -24px; }
+    .button-grid a:nth-child(4) { bottom: -24px; right: -24px; }
+    .shop-photos { gap: 6px; }
+    .shop-options { gap: 8px; }
+    .shop-options a, .shop-options span { min-width: 40px; padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="side-bar left"></div>
+<div class="side-bar right"></div>
+
+<div class="page-wrap">
+
+<main id="home">
+  <h1>URANIUM GIRLS</h1>
+
+  <div class="hero-frame">
+    <img class="hero" src="images/hero.jpg?v=1" alt="Sapphie the dinosaur puppet held aloft in front of the New York Public Library during Dyke March">
+    <div class="button-grid">
+      <a href="#sapphie"><img src="images/buttons/saphie.png?v=3" data-normal="images/buttons/saphie.png?v=3" data-pressed="images/buttons/saphie-pressed.png?v=3" alt="Sapphie"></a>
+      <a href="#shop"><img src="images/buttons/tshirt.png?v=3" data-normal="images/buttons/tshirt.png?v=3" data-pressed="images/buttons/tshirt-pressed.png?v=3" alt="Sapphie t-shirt"></a>
+      <!-- placeholder until there's hand-drawn "previous" art -->
+      <a href="#previous" class="text-button">previous<br>works</a>
+      <a href="#upcoming"><img src="images/buttons/question-mark.png?v=3" data-normal="images/buttons/question-mark.png?v=3" data-pressed="images/buttons/question-mark-pressed.png?v=3" alt="Upcoming events and projects"></a>
+    </div>
+  </div>
+</main>
+
+<section id="page-upcoming" class="page" hidden>
+  <a href="#" class="back">&larr; back</a>
+  <h2>Upcoming Events + Projects</h2>
+  <p class="none-yet">nothing yet &mdash; check back soon</p>
+</section>
+
+<section id="page-previous" class="page" hidden>
+  <a href="#" class="back">&larr; back</a>
+  <h2>Previous Works</h2>
+  <ul class="project-list">
+    <li><a href="#green-oasis">Green Oasis</a></li>
+    <li><a href="#bike-kill">Bike Kill</a></li>
+    <li><a href="#gone-wild">Gone Wild</a></li>
+  </ul>
+</section>
+
+<section id="page-green-oasis" class="page" hidden>
+  <a href="#previous" class="back">&larr; previous works</a>
+  <h2>Green Oasis</h2>
+  <p class="project-meta">in partnership with Green Oasis Community Garden</p>
+  <div class="photo-list" id="green-oasis-photo-list"></div>
+</section>
+
+<section id="page-bike-kill" class="page" hidden>
+  <a href="#previous" class="back">&larr; previous works</a>
+  <h2>Bike Kill</h2>
+  <figure class="lead-photo">
+    <img src="images/bike-kill/lead.jpg?v=1" alt="A rider in a sequined jacket laughs while towing the giant green papier-mâché figure through the Bike Kill crowd">
+    <figcaption>Photo: Scott Lynch for Brooklyn Magazine</figcaption>
+  </figure>
+  <div class="photo-list" id="bike-kill-photo-list"></div>
+</section>
+
+<section id="page-shop" class="page" hidden>
+  <a href="#" class="back">&larr; back</a>
+  <h2>Sapphie t-shirt</h2>
+  <div id="shop-list"></div>
+</section>
+
+<section id="page-thanks" class="page" hidden>
+  <a href="#" class="back">&larr; back</a>
+  <h2>thank you!!</h2>
+  <p>Sapphie got your money. check your email for a receipt &mdash; we'll mail your stuff soon.</p>
+</section>
+
+<section id="page-sapphie" class="page" hidden>
+  <a href="#" class="back">&larr; back</a>
+  <h2>Sapphie</h2>
+  <div class="photo-list" id="sapphie-photo-list"></div>
+</section>
+
+<section id="page-gone-wild" class="page" hidden>
+  <a href="#previous" class="back">&larr; previous works</a>
+  <h2>Gone Wild</h2>
+</section>
+
+<footer>Uranium Girls</footer>
+
+</div>
+
+<script>
+  // preload pressed-state images so the color swap is instant
+  document.querySelectorAll('.button-grid img').forEach(function (img) {
+    new Image().src = img.getAttribute('data-pressed');
+  });
+
+  // --- simple hash router: swap sections, never reload the page ---
+  const home = document.getElementById('home');
+  const pages = document.querySelectorAll('.page');
+  const routes = {
+    '#upcoming': 'page-upcoming',
+    '#events': 'page-upcoming', // old link, kept so it still works
+    '#previous': 'page-previous',
+    '#green-oasis': 'page-green-oasis',
+    '#bike-kill': 'page-bike-kill',
+    '#shop': 'page-shop',
+    '#sapphie': 'page-sapphie',
+    '#gone-wild': 'page-gone-wild',
+    '#thanks': 'page-thanks'
+  };
+
+  // always start at the top, even on refresh (browsers otherwise restore the old scroll spot)
+  history.scrollRestoration = 'manual';
+
+  function showRoute() {
+    const pageId = routes[window.location.hash];
+    home.hidden = !!pageId;
+    pages.forEach(function (p) { p.hidden = p.id !== pageId; });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', showRoute);
+  showRoute();
+
+  // --- button press feel: scale down + color pop while held ---
+  document.querySelectorAll('.button-grid a').forEach(function (btn) {
+    const img = btn.querySelector('img');
+
+    function press() {
+      btn.classList.add('pressed');
+      if (img) img.setAttribute('src', img.getAttribute('data-pressed'));
+    }
+    function release() {
+      btn.classList.remove('pressed');
+      if (img) img.setAttribute('src', img.getAttribute('data-normal'));
+    }
+
+    btn.addEventListener('pointerdown', press);
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (evt) {
+      btn.addEventListener(evt, release);
+    });
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = btn.getAttribute('href');
+      setTimeout(function () {
+        window.location.hash = target;
+      }, 130);
+    });
+  });
+
+  // --- photo lists: stacked, loosely scattered like a scrapbook ---
+  function scrapbook(listId, folder, numbers, alt) {
+    const photoList = document.getElementById(listId);
+    numbers.forEach(function (n) {
+      const img = document.createElement('img');
+      img.src = 'images/' + folder + '/' + n + '.jpg?v=1';
+      img.alt = alt;
+
+      const width = 78 + Math.random() * 16;       // 78% - 94%
+      const shiftX = Math.round(Math.random() * 30 - 15); // -15px - 15px
+      const marginTop = Math.round(20 + Math.random() * 40); // 20px - 60px
+
+      img.style.width = width + '%';
+      img.style.marginTop = marginTop + 'px';
+      img.style.transform = 'translateX(' + shiftX + 'px)';
+
+      photoList.appendChild(img);
+    });
+  }
+  scrapbook('sapphie-photo-list', 'gallery', ['01', '02', '03', '04', '05', '06', '07', '08'], 'Sapphie the dinosaur puppet');
+  // add numbers here as photos go into images/bike-kill/ (01.jpg, 02.jpg, ...)
+  scrapbook('bike-kill-photo-list', 'bike-kill', ['01', '02', '03', '04', '05', '06'], 'The Uranium Girls Bike Kill bike');
+  scrapbook('green-oasis-photo-list', 'green-oasis', [], 'Uranium Girls at Green Oasis Community Garden');
+
+  // --- shop: each option points at its own Stripe Payment Link ---
+  // paste a link in to make that option buyable; leave it '' to show it as sold out
+  const shopItems = [
+    {
+      name: 'Sapphie Shirt',
+      price: '$25',
+      photos: ['shirt-01.jpg', 'shirt-02.jpg', 'shirt-03.jpg'],
+      options: { S: '', M: '', L: '', XL: '' }
+    },
+    {
+      name: 'Sapphie Tote',
+      price: '$20',
+      photos: ['tote.jpg'],
+      options: { buy: '' }
+    },
+    {
+      name: '"Fight For You And Me To Get Home Safe" Print',
+      price: '$20',
+      photos: ['print-home-white.jpg', 'print-home-navy.jpg'],
+      options: { 'pink on white': '', 'pink on navy': '' }
+    },
+    {
+      name: '"I Eat Surveillance Cameras" Print',
+      price: '$20',
+      photos: ['print-cameras.jpg'],
+      options: { buy: '' }
+    }
+  ];
+
+  const shopList = document.getElementById('shop-list');
+  shopItems.forEach(function (item) {
+    const div = document.createElement('div');
+    div.className = 'shop-item';
+
+    const photos = document.createElement('div');
+    photos.className = 'shop-photos';
+    item.photos.forEach(function (file) {
+      const img = document.createElement('img');
+      img.src = 'images/shop/' + file + '?v=1';
+      img.alt = item.name;
+      photos.appendChild(img);
+    });
+    div.appendChild(photos);
+
+    const h3 = document.createElement('h3');
+    h3.textContent = item.name;
+    div.appendChild(h3);
+
+    const price = document.createElement('p');
+    price.className = 'price';
+    price.textContent = item.price;
+    div.appendChild(price);
+
+    if (item.note) {
+      const note = document.createElement('p');
+      note.className = 'note';
+      note.textContent = item.note;
+      div.appendChild(note);
+    }
+
+    const options = document.createElement('div');
+    options.className = 'shop-options';
+    Object.keys(item.options).forEach(function (label) {
+      const link = item.options[label];
+      const el = document.createElement(link ? 'a' : 'span');
+      el.textContent = label;
+      if (link) {
+        el.href = link;
+      } else {
+        el.title = 'sold out';
+      }
+      options.appendChild(el);
+    });
+    div.appendChild(options);
+
+    shopList.appendChild(div);
+  });
+
+</script>
+
+</body>
+</html>
