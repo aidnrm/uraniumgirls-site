@@ -94,6 +94,9 @@
   .project-list { list-style: none; padding: 0; margin: 0; }
   .project-list li { margin-bottom: 20px; }
   .project-list a { color: #26ff2e; font-size: 1.4em; }
+  .project-list a.drawing-link { display: inline-block; width: 160px; }
+  .project-list a.drawing-link img { width: 100%; height: auto; display: block; transition: transform 0.08s ease; }
+  .project-list a.drawing-link.pressed img { transform: scale(0.92) translateY(3px); }
 
   .shop-item { margin-bottom: 70px; }
   .shop-item h3 { font-weight: normal; margin: 0 0 6px; }
@@ -165,7 +168,7 @@
   <ul class="project-list">
     <li><a href="#green-oasis">Green Oasis</a></li>
     <li><a href="#bike-kill">Bike Kill</a></li>
-    <li><a href="#gone-wild">Gone Wild</a></li>
+    <li><a href="#gone-wild" class="drawing-link"><img src="images/buttons/gone-wild.png?v=3" data-normal="images/buttons/gone-wild.png?v=3" data-pressed="images/buttons/gone-wild-pressed.png?v=3" alt="Gone Wild"></a></li>
   </ul>
 </section>
 
@@ -217,7 +220,7 @@
 
 <script>
   // preload pressed-state images so the color swap is instant
-  document.querySelectorAll('.button-grid img').forEach(function (img) {
+  document.querySelectorAll('.button-grid img, .drawing-link img').forEach(function (img) {
     new Image().src = img.getAttribute('data-pressed');
   });
 
@@ -249,7 +252,7 @@
   showRoute();
 
   // --- button press feel: scale down + color pop while held ---
-  document.querySelectorAll('.button-grid a').forEach(function (btn) {
+  document.querySelectorAll('.button-grid a, .drawing-link').forEach(function (btn) {
     const img = btn.querySelector('img');
 
     function press() {
