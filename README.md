@@ -9,9 +9,9 @@ The Uranium Girls website: **https://uraniumgirls.com**, hosted on Neocities.
 | `main` | The live site | Yes. Every change to `main` is uploaded to uraniumgirls.com automatically, usually within a minute. |
 | `dev` | Our shared workspace | No. Work here, then open a pull request to put it on `main`. |
 
-**Never commit straight to `main`.** Commit to `dev` (or your own branch) and open a pull request.
+**Never commit straight to `main`.** GitHub blocks it anyway: `main` is protected, so changes only reach it through a pull request. Commit to `dev` (or your own branch) and open a pull request.
 
-The website files live in the `public` folder. "Public" is just the folder's name: it means "the files that get published to the website." The repo itself is private.
+The website files live in the `public` folder. "Public" is just the folder's name: it means "the files that get published to the website." The repo is public too: anyone can read the code and its history, but only invited members can change it.
 
 ```
 public/
